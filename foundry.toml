@@ -1,0 +1,11 @@
+[default]
+src = 'src'
+out = 'dist'
+libs = ['lib']
+remappings = ['ds-test/=lib/ds-test/src/']
+metadata = true
+verbosity = 3
+#eth-rpc-url = "https://example.com/"
+#evm-version = "berlin"
+#auto-detect-solc = false
+

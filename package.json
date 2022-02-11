@@ -1,0 +1,33 @@
+{
+  "name": "the-joy-of-foundry",
+  "version": "0.1.0",
+  "description": "Tutorial showing testing contracts with Foundry forge",
+  "main": "index.js",
+  "directories": {
+    "contracts": "contracts",
+    "src": "src",
+    "lib": "lib"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sambacha/the-joy-of-foundry.git"
+  },
+  "keywords": [],
+  "author": "sam bacha",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/sanbacha/the-joy-of-foundry/issues"
+  },
+  "homepage": "https://github.com/sanbacha/the-joy-of-foundry#readme",
+  "dependencies": {
+    "@uniswap/v3-core": "^1.0.1",
+    "@uniswap/v3-periphery": "^1.0.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.0",
+    "prettier": "^2.5.1",
+    "prettier-config-solidity": "^1.6.2",
+    "prettier-plugin-solidity": "^1.0.0-beta.19"
+  }
+}
