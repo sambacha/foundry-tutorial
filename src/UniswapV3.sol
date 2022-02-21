@@ -2,8 +2,8 @@
 pragma solidity ^0.8.4;
 
 import "ds-test/test.sol";
-import { LiquidityAmounts } from "../libs/LiquidityAmounts.sol";
-import { FullMath } from "../libs/FullMath.sol";
+import { LiquidityAmounts } from "./libs/LiquidityAmounts.sol";
+import { FullMath } from "./libs/FullMath.sol";
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
 
 contract UniswapV3 is DSTest {

@@ -1,0 +1,711 @@
+{ Def = List { mapKey : Natural, mapValue : Text }
+, DefEntry = { mapKey : Natural, mapValue : Text }
+, Math = { _math : Text, def : List { mapKey : Natural, mapValue : Text } }
+, Module =
+      λ(o : Type)
+    →   (   o
+          → (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+      → (   Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+      → Natural
+      → List { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+, Module/default =
+      λ(t : Type)
+    → λ ( default
+        :   (   t
+              → (   Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+              → Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → λ(o : Optional t)
+    → λ ( sp
+        :   t
+          → (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → Optional/fold
+        (   (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+        ( Optional/fold
+            t
+            o
+            ( Optional
+                (   (   Natural
+                      → List
+                          { _void : Text
+                          , def : List { mapKey : Natural, mapValue : Text }
+                          }
+                    )
+                  → Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+            )
+            (λ(x : t) → Some (sp x))
+            ( None
+                (   (   Natural
+                      → List
+                          { _void : Text
+                          , def : List { mapKey : Natural, mapValue : Text }
+                          }
+                    )
+                  → Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+            )
+        )
+        (   (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+        (   λ ( x
+              :   (   Natural
+                    → List
+                        { _void : Text
+                        , def : List { mapKey : Natural, mapValue : Text }
+                        }
+                  )
+                → Natural
+                → List
+                    { _void : Text
+                    , def : List { mapKey : Natural, mapValue : Text }
+                    }
+              )
+          → x
+        )
+        (default sp)
+, Module/fork =
+      λ(a : Type)
+    → λ(b : Type)
+    → λ ( f
+        :   a
+          → (   b
+              → (   Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+              → Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → λ(o : Optional a)
+    → λ ( sp
+        :   Optional b
+          → (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → Optional/fold
+        (   (   Optional b
+              → (   Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+              → Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+        ( Optional/fold
+            a
+            o
+            ( Optional
+                (   (   Optional b
+                      → (   Natural
+                          → List
+                              { _void : Text
+                              , def : List { mapKey : Natural, mapValue : Text }
+                              }
+                        )
+                      → Natural
+                      → List
+                          { _void : Text
+                          , def : List { mapKey : Natural, mapValue : Text }
+                          }
+                    )
+                  → (   Natural
+                      → List
+                          { _void : Text
+                          , def : List { mapKey : Natural, mapValue : Text }
+                          }
+                    )
+                  → Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+            )
+            (   λ(x : a)
+              → Some
+                  (   λ ( return
+                        :   Optional b
+                          → (   Natural
+                              → List
+                                  { _void : Text
+                                  , def :
+                                      List { mapKey : Natural, mapValue : Text }
+                                  }
+                            )
+                          → Natural
+                          → List
+                              { _void : Text
+                              , def : List { mapKey : Natural, mapValue : Text }
+                              }
+                        )
+                    → f x (λ(y : b) → return (Some y))
+                  )
+            )
+            ( None
+                (   (   Optional b
+                      → (   Natural
+                          → List
+                              { _void : Text
+                              , def : List { mapKey : Natural, mapValue : Text }
+                              }
+                        )
+                      → Natural
+                      → List
+                          { _void : Text
+                          , def : List { mapKey : Natural, mapValue : Text }
+                          }
+                    )
+                  → (   Natural
+                      → List
+                          { _void : Text
+                          , def : List { mapKey : Natural, mapValue : Text }
+                          }
+                    )
+                  → Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+            )
+        )
+        (   (   Optional b
+              → (   Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+              → Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+        (   λ ( x
+              :   (   Optional b
+                    → (   Natural
+                        → List
+                            { _void : Text
+                            , def : List { mapKey : Natural, mapValue : Text }
+                            }
+                      )
+                    → Natural
+                    → List
+                        { _void : Text
+                        , def : List { mapKey : Natural, mapValue : Text }
+                        }
+                  )
+                → (   Natural
+                    → List
+                        { _void : Text
+                        , def : List { mapKey : Natural, mapValue : Text }
+                        }
+                  )
+                → Natural
+                → List
+                    { _void : Text
+                    , def : List { mapKey : Natural, mapValue : Text }
+                    }
+              )
+          → x
+        )
+        (   λ ( return
+              :   Optional b
+                → (   Natural
+                    → List
+                        { _void : Text
+                        , def : List { mapKey : Natural, mapValue : Text }
+                        }
+                  )
+                → Natural
+                → List
+                    { _void : Text
+                    , def : List { mapKey : Natural, mapValue : Text }
+                    }
+              )
+          → return (None b)
+        )
+        sp
+, Module/optional =
+      λ(a : Type)
+    → λ(b : Type)
+    → λ(f : a → b)
+    → λ(o : Optional a)
+    → λ ( sp
+        :   Optional b
+          → (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → sp (Optional/fold a o (Optional b) (λ(x : a) → Some (f x)) (None b))
+, Module/plan =
+      λ(o : Type)
+    → λ ( module
+        :   (   o
+              → (   Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+              → Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → module
+        (   λ(_ : o)
+          → λ ( s
+              :   Natural
+                → List
+                    { _void : Text
+                    , def : List { mapKey : Natural, mapValue : Text }
+                    }
+              )
+          → s
+        )
+, Module/run =
+      λ(o : Type)
+    → λ ( module
+        :   (   o
+              → (   Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+              → Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → module
+        (   λ(_ : o)
+          → λ ( s
+              :   Natural
+                → List
+                    { _void : Text
+                    , def : List { mapKey : Natural, mapValue : Text }
+                    }
+              )
+          → s
+        )
+        (   λ(tag : Natural)
+          → [] : List
+                   { _void : Text
+                   , def : List { mapKey : Natural, mapValue : Text }
+                   }
+        )
+        0
+, Plan =
+      (   Natural
+        → List
+            { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+      )
+    → Natural
+    → List { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+, Plan/build =
+      λ ( run
+        : List
+            { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → λ ( next
+        :   Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → λ(tag : Natural)
+    → run # next tag
+, Plan/buildThen =
+      λ ( run
+        : List
+            { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → λ ( after
+        :   (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → λ ( next
+        :   Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → λ(tag : Natural)
+    → run # after next tag
+, Plan/concat =
+      λ ( ps
+        : List
+            (   (   Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+              → Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+        )
+    → List/fold
+        (   (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+        ps
+        (   Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+        (   λ ( x
+              :   (   Natural
+                    → List
+                        { _void : Text
+                        , def : List { mapKey : Natural, mapValue : Text }
+                        }
+                  )
+                → Natural
+                → List
+                    { _void : Text
+                    , def : List { mapKey : Natural, mapValue : Text }
+                    }
+              )
+          → x
+        )
+, Plan/empty =
+      λ ( s
+        :   Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → s
+, Plan/optional =
+      λ ( o
+        : Optional
+            (   (   Natural
+                  → List
+                      { _void : Text
+                      , def : List { mapKey : Natural, mapValue : Text }
+                      }
+                )
+              → Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+        )
+    → Optional/fold
+        (   (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+        o
+        (   (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+        (   λ ( x
+              :   (   Natural
+                    → List
+                        { _void : Text
+                        , def : List { mapKey : Natural, mapValue : Text }
+                        }
+                  )
+                → Natural
+                → List
+                    { _void : Text
+                    , def : List { mapKey : Natural, mapValue : Text }
+                    }
+              )
+          → x
+        )
+        (   λ ( s
+              :   Natural
+                → List
+                    { _void : Text
+                    , def : List { mapKey : Natural, mapValue : Text }
+                    }
+              )
+          → s
+        )
+, Plan/outputs =
+      λ(t : Type)
+    → λ ( f
+        :   Text
+          → t
+          → { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → λ(m : List { mapKey : Text, mapValue : t })
+    → λ ( next
+        :   Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → λ(tag : Natural)
+    →   List/fold
+          { mapKey : Text, mapValue : t }
+          m
+          ( List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+          )
+          (   λ(x : { mapKey : Text, mapValue : t })
+            → λ ( `as`
+                : List
+                    { _void : Text
+                    , def : List { mapKey : Natural, mapValue : Text }
+                    }
+                )
+            → [ f x.mapKey x.mapValue ] # `as`
+          )
+          ( [] : List
+                   { _void : Text
+                   , def : List { mapKey : Natural, mapValue : Text }
+                   }
+          )
+      # next tag
+, Plan/run =
+      λ ( p
+        :   (   Natural
+              → List
+                  { _void : Text
+                  , def : List { mapKey : Natural, mapValue : Text }
+                  }
+            )
+          → Natural
+          → List
+              { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → p
+        (   λ(tag : Natural)
+          → [] : List
+                   { _void : Text
+                   , def : List { mapKey : Natural, mapValue : Text }
+                   }
+        )
+        0
+, Run = List { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+, SinglePlan =
+      Natural
+    → List { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+, SinglePlan/empty =
+      λ(tag : Natural)
+    → [] : List
+             { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+, Void = { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+, Void/empty =
+    { _void = "", def = [] : List { mapKey : Natural, mapValue : Text } }
+, Void/optional =
+      λ ( o
+        : Optional
+            { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → Optional/fold
+        { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        o
+        { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        (   λ ( x
+              : { _void : Text
+                , def : List { mapKey : Natural, mapValue : Text }
+                }
+              )
+          → x
+        )
+        { _void = "", def = [] : List { mapKey : Natural, mapValue : Text } }
+, ethToGWei = λ(eth : Natural) → eth * 1000000000
+, ethToWei = λ(eth : Natural) → eth * 1000000000000000000
+, pow =
+      λ(x : Natural)
+    → λ(n : Natural)
+    → List/fold
+        Natural
+        ( List/fold
+            { index : Natural, value : {} }
+            ( List/indexed
+                {}
+                ( Natural/fold
+                    n
+                    (List {})
+                    (λ(`as` : List {}) → [ {=} ] # `as`)
+                    ([] : List {})
+                )
+            )
+            (List Natural)
+            (   λ(x : { index : Natural, value : {} })
+              → λ(`as` : List Natural)
+              → [ 1 ] # `as`
+            )
+            ([] : List Natural)
+        )
+        Natural
+        (λ(a : Natural) → λ(b : Natural) → b * x)
+        1
+}

@@ -1,0 +1,484 @@
+{ add =
+      λ(x : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → λ(y : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → { _math =
+          ''
+          { "op": "math", "mathOp": "add", "x": ${x._math}, "y": ${y._math} }
+          ''
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+, asciiToHex =
+      λ(ascii : Text)
+    → { _hex =
+          ''
+          { "op": "asciiToHex", "asciiToHex": "${ascii}" }
+          ''
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+, callMem =
+      λ(id : Natural)
+    → λ(op : Text)
+    → λ(type : Text)
+    → ''
+      { "op": "callDef", "callDef": "${Natural/show
+                                         id}", "opType": "${op}", "type": ${type} }
+      ''
+, concatDefs =
+      λ(ds : List (List { mapKey : Natural, mapValue : Text }))
+    → List/fold
+        (List { mapKey : Natural, mapValue : Text })
+        ds
+        (List { mapKey : Natural, mapValue : Text })
+        (   λ(x : List { mapKey : Natural, mapValue : Text })
+          → λ(acc : List { mapKey : Natural, mapValue : Text })
+          → x # acc
+        )
+        ([] : List { mapKey : Natural, mapValue : Text })
+, defineMem =
+    λ(id : Natural) → λ(code : Text) → [ { mapKey = id, mapValue = code } ]
+, div =
+      λ(x : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → λ(y : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → { _math =
+          ''
+          { "op": "math", "mathOp": "div", "x": ${x._math}, "y": ${y._math} }
+          ''
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+, exp =
+      λ(x : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → { _math =
+          ''
+          { "op": "math", "mathOp": "exp", "x": ${x._math} }
+          ''
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+, from =
+    { _address = "{ \"op\": \"from\", \"type\": \"address\" }"
+    , def = [] : List { mapKey : Natural, mapValue : Text }
+    }
+, log =
+      λ(x : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → { _math =
+          ''
+          { "op": "math", "mathOp": "log", "x": ${x._math} }
+          ''
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+, mul =
+      λ(x : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → λ(y : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → { _math =
+          ''
+          { "op": "math", "mathOp": "mul", "x": ${x._math}, "y": ${y._math} }
+          ''
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+, noop =
+      λ(id : Natural)
+    → ''
+      { "op": "noop", "noop": "${Natural/show id}" }
+      ''
+, num =
+      λ(x : Natural)
+    → { _math = Natural/show x
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+, numToHex =
+      λ(scale : Natural)
+    → λ(x : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → { _hex =
+          "{ \"op\": \"mathToHex\", \"scale\": ${Natural/show
+                                                   scale}, \"value\": ${x._math} }"
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+, pow =
+      λ(x : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → λ(y : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → { _math =
+          ''
+          { "op": "math", "mathOp": "pow", "x": ${x._math}, "y": ${y._math} }
+          ''
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+, render =
+      λ ( vs
+        : List
+            { _void : Text, def : List { mapKey : Natural, mapValue : Text } }
+        )
+    → ''
+      {
+        "meta": {
+          "generator": "abi-to-dhall"
+        },
+        "version": 1,
+        "ops": [
+          ${merge
+              { Empty = "", NonEmpty = λ(result : Text) → result }
+              ( List/fold
+                  Text
+                  (   List/fold
+                        { mapKey : Natural, mapValue : Text }
+                        ( List/fold
+                            { mapKey : Natural, mapValue : Text }
+                            ( List/fold
+                                (List { mapKey : Natural, mapValue : Text })
+                                ( List/fold
+                                    { _void : Text
+                                    , def :
+                                        List
+                                          { mapKey : Natural, mapValue : Text }
+                                    }
+                                    vs
+                                    ( List
+                                        ( List
+                                            { mapKey : Natural
+                                            , mapValue : Text
+                                            }
+                                        )
+                                    )
+                                    (   λ ( x
+                                          : { _void : Text
+                                            , def :
+                                                List
+                                                  { mapKey : Natural
+                                                  , mapValue : Text
+                                                  }
+                                            }
+                                          )
+                                      → λ ( `as`
+                                          : List
+                                              ( List
+                                                  { mapKey : Natural
+                                                  , mapValue : Text
+                                                  }
+                                              )
+                                          )
+                                      → [ x.def ] # `as`
+                                    )
+                                    ( [] : List
+                                             ( List
+                                                 { mapKey : Natural
+                                                 , mapValue : Text
+                                                 }
+                                             )
+                                    )
+                                )
+                                (List { mapKey : Natural, mapValue : Text })
+                                (   λ ( x
+                                      : List
+                                          { mapKey : Natural, mapValue : Text }
+                                      )
+                                  → λ ( acc
+                                      : List
+                                          { mapKey : Natural, mapValue : Text }
+                                      )
+                                  → x # acc
+                                )
+                                ( [] : List
+                                         { mapKey : Natural, mapValue : Text }
+                                )
+                            )
+                            (List { mapKey : Natural, mapValue : Text })
+                            (   λ(e : { mapKey : Natural, mapValue : Text })
+                              → λ ( d
+                                  : List { mapKey : Natural, mapValue : Text }
+                                  )
+                              →       if Natural/isZero
+                                           ( List/length
+                                               { mapKey : Natural
+                                               , mapValue : Text
+                                               }
+                                               d
+                                           )
+
+                                then  [ e ]
+
+                                else  if List/fold
+                                           { mapKey : Natural, mapValue : Text }
+                                           ( List/fold
+                                               { mapKey : Natural
+                                               , mapValue : Text
+                                               }
+                                               d
+                                               ( List
+                                                   { mapKey : Natural
+                                                   , mapValue : Text
+                                                   }
+                                               )
+                                               (   λ ( x
+                                                     : { mapKey : Natural
+                                                       , mapValue : Text
+                                                       }
+                                                     )
+                                                 → λ ( acc
+                                                     : List
+                                                         { mapKey : Natural
+                                                         , mapValue : Text
+                                                         }
+                                                     )
+                                                 →       if List/fold
+                                                              { mapKey : Natural
+                                                              , mapValue : Text
+                                                              }
+                                                              acc
+                                                              Bool
+                                                              (   λ ( x
+                                                                    : { mapKey :
+                                                                          Natural
+                                                                      , mapValue :
+                                                                          Text
+                                                                      }
+                                                                    )
+                                                                → λ(r : Bool)
+                                                                →         Natural/isZero
+                                                                            ( Natural/subtract
+                                                                                e.mapKey
+                                                                                x.mapKey
+                                                                            )
+                                                                      &&  Natural/isZero
+                                                                            ( Natural/subtract
+                                                                                x.mapKey
+                                                                                e.mapKey
+                                                                            )
+                                                                  ||  r
+                                                              )
+                                                              False
+
+                                                   then  [ x ] # acc
+
+                                                   else  if     Natural/isZero
+                                                                  ( Natural/subtract
+                                                                      x.mapKey
+                                                                      e.mapKey
+                                                                  )
+                                                            ==  False
+
+                                                   then  [ x, e ] # acc
+
+                                                   else  [ x ] # acc
+                                               )
+                                               ( [] : List
+                                                        { mapKey : Natural
+                                                        , mapValue : Text
+                                                        }
+                                               )
+                                           )
+                                           Bool
+                                           (   λ ( x
+                                                 : { mapKey : Natural
+                                                   , mapValue : Text
+                                                   }
+                                                 )
+                                             → λ(r : Bool)
+                                             →         Natural/isZero
+                                                         ( Natural/subtract
+                                                             e.mapKey
+                                                             x.mapKey
+                                                         )
+                                                   &&  Natural/isZero
+                                                         ( Natural/subtract
+                                                             x.mapKey
+                                                             e.mapKey
+                                                         )
+                                               ||  r
+                                           )
+                                           False
+
+                                then  List/fold
+                                        { mapKey : Natural, mapValue : Text }
+                                        d
+                                        ( List
+                                            { mapKey : Natural
+                                            , mapValue : Text
+                                            }
+                                        )
+                                        (   λ ( x
+                                              : { mapKey : Natural
+                                                , mapValue : Text
+                                                }
+                                              )
+                                          → λ ( acc
+                                              : List
+                                                  { mapKey : Natural
+                                                  , mapValue : Text
+                                                  }
+                                              )
+                                          →       if List/fold
+                                                       { mapKey : Natural
+                                                       , mapValue : Text
+                                                       }
+                                                       acc
+                                                       Bool
+                                                       (   λ ( x
+                                                             : { mapKey :
+                                                                   Natural
+                                                               , mapValue : Text
+                                                               }
+                                                             )
+                                                         → λ(r : Bool)
+                                                         →         Natural/isZero
+                                                                     ( Natural/subtract
+                                                                         e.mapKey
+                                                                         x.mapKey
+                                                                     )
+                                                               &&  Natural/isZero
+                                                                     ( Natural/subtract
+                                                                         x.mapKey
+                                                                         e.mapKey
+                                                                     )
+                                                           ||  r
+                                                       )
+                                                       False
+
+                                            then  [ x ] # acc
+
+                                            else  if     Natural/isZero
+                                                           ( Natural/subtract
+                                                               x.mapKey
+                                                               e.mapKey
+                                                           )
+                                                     ==  False
+
+                                            then  [ x, e ] # acc
+
+                                            else  [ x ] # acc
+                                        )
+                                        ( [] : List
+                                                 { mapKey : Natural
+                                                 , mapValue : Text
+                                                 }
+                                        )
+
+                                else    [ e ]
+                                      # List/fold
+                                          { mapKey : Natural, mapValue : Text }
+                                          d
+                                          ( List
+                                              { mapKey : Natural
+                                              , mapValue : Text
+                                              }
+                                          )
+                                          (   λ ( x
+                                                : { mapKey : Natural
+                                                  , mapValue : Text
+                                                  }
+                                                )
+                                            → λ ( acc
+                                                : List
+                                                    { mapKey : Natural
+                                                    , mapValue : Text
+                                                    }
+                                                )
+                                            →       if List/fold
+                                                         { mapKey : Natural
+                                                         , mapValue : Text
+                                                         }
+                                                         acc
+                                                         Bool
+                                                         (   λ ( x
+                                                               : { mapKey :
+                                                                     Natural
+                                                                 , mapValue :
+                                                                     Text
+                                                                 }
+                                                               )
+                                                           → λ(r : Bool)
+                                                           →         Natural/isZero
+                                                                       ( Natural/subtract
+                                                                           e.mapKey
+                                                                           x.mapKey
+                                                                       )
+                                                                 &&  Natural/isZero
+                                                                       ( Natural/subtract
+                                                                           x.mapKey
+                                                                           e.mapKey
+                                                                       )
+                                                             ||  r
+                                                         )
+                                                         False
+
+                                              then  [ x ] # acc
+
+                                              else  if     Natural/isZero
+                                                             ( Natural/subtract
+                                                                 x.mapKey
+                                                                 e.mapKey
+                                                             )
+                                                       ==  False
+
+                                              then  [ x, e ] # acc
+
+                                              else  [ x ] # acc
+                                          )
+                                          ( [] : List
+                                                   { mapKey : Natural
+                                                   , mapValue : Text
+                                                   }
+                                          )
+                            )
+                            ([] : List { mapKey : Natural, mapValue : Text })
+                        )
+                        (List Text)
+                        (   λ(x : { mapKey : Natural, mapValue : Text })
+                          → λ(`as` : List Text)
+                          →   [ "{ \"op\": \"def\", \"id\": \"${Natural/show
+                                                                  x.mapKey}\", \"def\": ${x.mapValue} }"
+                              ]
+                            # `as`
+                        )
+                        ([] : List Text)
+                    # List/fold
+                        { _void : Text
+                        , def : List { mapKey : Natural, mapValue : Text }
+                        }
+                        vs
+                        (List Text)
+                        (   λ ( x
+                              : { _void : Text
+                                , def :
+                                    List { mapKey : Natural, mapValue : Text }
+                                }
+                              )
+                          → λ(`as` : List Text)
+                          → [ x._void ] # `as`
+                        )
+                        ([] : List Text)
+                  )
+                  < Empty | NonEmpty : Text >
+                  (   λ(element : Text)
+                    → λ(status : < Empty | NonEmpty : Text >)
+                    → merge
+                        { Empty = < Empty | NonEmpty : Text >.NonEmpty element
+                        , NonEmpty =
+                              λ(result : Text)
+                            → < Empty | NonEmpty : Text >.NonEmpty
+                                ''
+                                ${element},
+                                ${result}''
+                        }
+                        status
+                  )
+                  < Empty | NonEmpty : Text >.Empty
+              )}
+        ]
+      }
+      ''
+, sig =
+      λ(t : Text)
+    → { _hex =
+          ''
+          { "op": "sig", "sig": "${t}" }
+          ''
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+, sub =
+      λ(x : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → λ(y : { _math : Text, def : List { mapKey : Natural, mapValue : Text } })
+    → { _math =
+          ''
+          { "op": "math", "mathOp": "sub", "x": ${x._math}, "y": ${y._math} }
+          ''
+      , def = [] : List { mapKey : Natural, mapValue : Text }
+      }
+}

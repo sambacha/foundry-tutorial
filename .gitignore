@@ -1,6 +1,13 @@
-cache
-node_modules
-out
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+.vscode/*
+!.vscode/settings.json
+build
+/**/build
 .DS_Store
-*.log
+node_modules
+out/
+dist/
+build/
 
