@@ -17,6 +17,17 @@ UniswapV3 Liquidity Testing
 forge test -f $ETH_RPC_URL -vvv --fork-block-number 14327540
 ```
 
+### Test Pattern: Console Emit
+
+```solidity
+  // from src/test/UniswapV3.sol
+  emit log_named_uint("amount0 (USDC)", amount0);
+  emit log_named_uint("amount1 (ETH)", amount1);
+
+  emit log("------- amount0/amount1 for liquidity at range [lower, upper] at LOWER price");
+  emit log_named_uint("lowerPrice (ETH/USDC)", token0Price(sqrtPriceLowerX96));
+```
+
 ### Example
 
 ```sh
@@ -43,4 +54,5 @@ Logs:
 
 ## License
 
-Foundry is released under [MIT/Apache-20](/LICENSE) by [@gakonst](https://github.com/gakonst).
+Foundry is released under [MIT/Apache-20](/LICENSE) by [@gakonst](https://github.com/gakonst) <br />
+Solidity contracts are Copyright 2021 by [@MrToph](https://github.com/MrToph)
