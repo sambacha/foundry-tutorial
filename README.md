@@ -6,15 +6,41 @@
 
 </div>
 
-
-
 ---
 
 
-## Documentation
+## Overview
 
- > TODO
+UniswapV3 Liquidity Testing
+
+```sh
+forge test -f $ETH_RPC_URL -vvv --fork-block-number 14327540
+```
+
+### Example
+
+```sh
+$ forge test -f $ETH_RPC_URL -vvv --fork-block-number 14327540
+Compiling...
+No files changed, compilation skipped
+
+Running 1 test for UniswapV3Test.json:UniswapV3Test
+[PASS] testExample() (gas: 36365)
+Logs:
+  ------- amount0/amount1 for liquidity at range [lower, upper] at CURRENT price
+  currentPrice (ETH/USDC): 378261998000000
+  amount0 (USDC): 9409580115
+  amount1 (ETH): 5698544927171011234
+  ------- amount0/amount1 for liquidity at range [lower, upper] at LOWER price
+  lowerPrice (ETH/USDC): 189073881000000
+  amount0 (USDC): 30718029649
+  amount1 (ETH): 0
+  ------- amount0/amount1 for liquidity at range [lower, upper] at UPPER price
+  upperPrice (ETH/USDC): 566703047000000
+  amount0 (USDC): 0
+  amount1 (ETH): 10055111697431443031
+```
 
 ## License
 
-Released under [MIT/Apache-20](/LICENSE) by [@gakonst](https://github.com/gakonst).
+Foundry is released under [MIT/Apache-20](/LICENSE) by [@gakonst](https://github.com/gakonst).
